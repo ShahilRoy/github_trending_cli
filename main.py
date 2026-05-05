@@ -51,8 +51,7 @@ def fetch(
         date_query = f">{target_date.strftime('%Y-%m-%d')}"
         display_label = f"the last {lookback} days"
 
-    lang_label = lang if lang else "all languages"
-    print(f"Checking GitHub for trending [{lang_label}] repositories from {display_label}... Search")
+    lang_label = lang.capitalize() if lang else "All Languages"
 
     # Call the API with our constructed date query
     data = get_trending_repos(date_query, lang)
@@ -61,7 +60,7 @@ def fetch(
     top_repos = all_repos[:limit]
 
     if top_repos:
-        show_results(top_repos, limit, translate)
+        show_results(top_repos, limit, translate, lang_label=lang_label, time_label=display_label)
     else:
         print(f"No trending repositories found for {display_label}.")
 
