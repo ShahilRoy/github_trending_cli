@@ -29,7 +29,7 @@ def fetch(
     # Call the function and store the response
     data = get_trending_repos(date_string, lang)
 
-    all_repos = data.get("items", [])
+    all_repos = data.get("items", []) # If data is {}, repos becomes []
 
     top_repos = all_repos[:limit]
 
