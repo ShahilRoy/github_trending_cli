@@ -1,73 +1,89 @@
-# 🚀 GitHub Trending Dashboard CLI
+# 🚀 GitHub Trending Dashboard
 
-A professional, high-contrast terminal dashboard for tracking trending GitHub repositories. Built with Python and Rich, this CLI provides a premium interface for developers to discover what's hot in the ecosystem.
+This tool lets you see what projects are popular on GitHub right now, directly from your computer terminal. It's designed to look great and be very easy to use.
 
-![CLI Preview](https://raw.githubusercontent.com/ShahilRoy/github_trending_cli/main/preview.png) *(Placeholder: You can add a real screenshot here later)*
+---
 
-## ✨ Features
+## ✨ What can this tool do?
 
-- 📊 **Dynamic Dashboard**: Beautifully formatted tables with rank, stars, language, and repository info.
-- 🕒 **Flexible Timeframes**: Fetch trending repos from the last X days or specific years/months.
-- 🌍 **Translation**: Auto-translate repository descriptions to English using Google Translate.
-- 📂 **Data Export**: Save results directly to `JSON` or `CSV` for further analysis.
-- ⚙️ **Configurable**: Set default languages and GitHub tokens for higher rate limits.
-- 🎨 **Premium UI**: Amber-themed dashboard with ASCII art and system status indicators.
+- 📊 **See Trends**: Shows a beautiful table of the top trending projects.
+- 🕒 **Choose Time**: Look at trends from today, this week, or even a specific year like 2023.
+- 🌍 **Translate**: If a project description is in a different language, it can translate it to English for you.
+- 📂 **Save Results**: You can save the list to your **Downloads** folder as a file (JSON or CSV).
+- 🎨 **Looks Cool**: It uses high-contrast colors and a professional "dashboard" style.
 
-## 🛠️ Installation
+---
 
-### Using Pip (Recommended)
+## 🛠️ How to Install (For Beginners)
+
+If you are new to this, just follow these steps:
+
+1. **Download the code**: 
+   Click the green "Code" button at the top of this GitHub page and select "Download ZIP". Extract the folder once it's downloaded.
+2. **Open your Terminal**:
+   On Windows, search for "CMD" or "PowerShell". On Mac, search for "Terminal".
+3. **Go to the folder**:
+   Type `cd` followed by a space, then drag the folder into the terminal window and press Enter.
+4. **Install the tool**:
+   Type this and press Enter:
+   ```bash
+   pip install .
+   ```
+
+---
+
+## 🔐 How to get your GitHub Token (Crucial)
+
+GitHub limits how many times you can ask for data if you don't have a "Token". If you see a "Rate Limit" error, you need a token. Here is exactly how to get one:
+
+1. Log in to your [GitHub account](https://github.com/).
+2. Click your **Profile Picture** (top right) -> **Settings**.
+3. Scroll all the way down on the left and click **Developer settings**.
+4. Click **Personal access tokens** -> **Tokens (classic)**.
+5. Click **Generate new token** -> **Generate new token (classic)**.
+6. Give it a name (like "My CLI Tool").
+7. **Important**: You don't need to check any boxes (permissions) for this tool to work! Just scroll to the bottom and click **Generate token**.
+8. **Copy the token** (it looks like `ghp_...`). **Warning: You will only see it once!**
+
+### How to use your token:
+Type this in your terminal (replace `YOUR_TOKEN` with the code you just copied):
 ```bash
-pip install .
+gh-trending config --token YOUR_TOKEN
 ```
 
-### From Source
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/ShahilRoy/github_trending_cli.git
-   cd github_trending_cli
-   ```
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
 
-## ⌨️ Command Reference
+## ⌨️ How to use the Tool (Easy Commands)
 
-### 🛠️ Configuration Variations
-| Goal | Command |
+Once installed, you can use these commands from anywhere:
+
+### Basic Commands
+| What you want to do | Type this command |
 | :--- | :--- |
-| **Set GitHub Token** | `python main.py config --token ghp_your_token` |
-| **Set Default Language** | `python main.py config --lang python` |
-| **Set Both Token & Language** | `python main.py config --token ghp_xyz --lang rust` |
-| **View Current Config** | `python main.py config --show` |
+| **See Top 10 Trending Repos** | `gh-trending fetch` |
+| **See Top 5 instead of 10** | `gh-trending fetch --limit 5` |
+| **See only Python projects** | `gh-trending fetch --lang python` |
+| **Strictly only Python** (no mixed projects) | `gh-trending fetch --lang python --strict` |
 
-### 📊 Fetching Variations
-| Goal | Command |
+### Advanced Tricks
+| What you want to do | Type this command |
 | :--- | :--- |
-| **Quick Start** (Default 7 days) | `python main.py fetch` |
-| **Limit Results** (e.g., top 5) | `python main.py fetch --limit 5` |
-| **Filter by Language** (Inclusive) | `python main.py fetch --lang python` |
-| **Strict Language Filter** (Primary only) | `python main.py fetch --lang python --strict` |
-| **Change Timeframe** (e.g., last 30 days) | `python main.py fetch --days 30` |
-| **Fetch Specific Year** | `python main.py fetch --year 2023` |
-| **Fetch Specific Month** | `python main.py fetch --year 2024 --month 5` |
-| **Fetch Specific Day** | `python main.py fetch --year 2024 --month 5 --day 20` |
-| **Translate to English** | `python main.py fetch --translate` |
-| **Export to JSON** | `python main.py fetch --export json` |
-| **Export to CSV** | `python main.py fetch --export csv` |
-| **Ultimate Combo** (Top 3, Rust, Translate, Export) | `python main.py fetch --limit 3 --lang rust --translate --export json` |
+| **See trends from 2023** | `gh-trending fetch --year 2023` |
+| **See trends from last 30 days** | `gh-trending fetch --days 30` |
+| **Translate results to English** | `gh-trending fetch --translate` |
+| **Save to Downloads folder (Excel/CSV)** | `gh-trending fetch --export csv` |
+| **Save to Downloads folder (JSON)** | `gh-trending fetch --export json` |
 
-## 🔐 Authentication
-To avoid GitHub API rate limiting, it is recommended to use a GitHub Token:
-1. Generate a token at [GitHub Settings](https://github.com/settings/tokens).
-2. Configure it:
-   ```bash
-   python main.py config --token ghp_your_token_here
-   ```
-   Or add it to a `.env` file: `GITHUB_TOKEN=ghp_...`
+### Configuration (Settings)
+| What you want to do | Type this command |
+| :--- | :--- |
+| **Set a default language** (e.g. Java) | `gh-trending config --lang java` |
+| **Check your current settings** | `gh-trending config --show` |
+
+---
 
 ## 📄 License
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
+This project is free to use and modify, but it must **always remain free** for everyone. It is protected by the **GNU General Public License v3.0**.
 
 ---
 *Created with ❤️ by Shahil Roy*
