@@ -1,73 +1,88 @@
-import typer
+import click
 from datetime import datetime, timedelta
+import json
+import os
 
-from github_api import get_trending_repos
-from ui import show_results
+from src.api import get_trending_repos
+from src.ui import show_results
+from src.utils import save_config, load_config, export_data
 
-app = typer.Typer()
+@click.group()
+def cli():
+    """GitHub Trending Dashboard CLI"""
+    pass
 
-@app.command("fetch")
-def fetch(
-    days: int = typer.Option(None, help="Number of days to look back from today."),
-    year: int = typer.Option(None, help="Fetch repos from a specific year (e.g., 2022)."),
-    month: int = typer.Option(None, min=1, max=12, help="Fetch repos from a specific month (1-12). Requires --year."),
-    day: int = typer.Option(None, min=1, max=31, help="Fetch repos from a specific day (1-31). Requires --year and --month."),
-    lang: str = typer.Option(None, help="Filter by language (e.g. python, javascript)."),
-    limit: int = typer.Option(10, help="Number of repositories to display. Default is 10."),
-    translate: bool = typer.Option(False, "--translate", "-t", help="Translate descriptions to English.")
-):
-    """Fetch trending repositories from custom dates or time ranges."""
+@cli.command()
+@click.option("--token", default="", help="GitHub Token")
+@click.option("--lang", default="", help="Default Language")
+@click.option("--show", is_flag=True, help="Show config")
+def config(token, lang, show):
+    """Configuration settings."""
+    if show:
+        conf = load_config()
+        if not conf:
+            click.echo("No configuration found.")
+            return
+        for k, v in conf.items():
+            click.echo(f"{k}: {v}")
+        return
     
-    # Validation: month/day require a year
-    if (month or day) and not year:
-        print("Error: You must provide a --year to filter by month or day.")
-        raise typer.Exit()
-    if day and not month:
-        print("Error: You must provide a --month to filter by day.")
-        raise typer.Exit()
+    updates = {}
+    if token: updates["token"] = token
+    if lang: updates["default_lang"] = lang
+    
+    if updates:
+        save_config(updates)
+        click.echo("Config updated.")
+    else:
+        click.echo("No updates provided. Use --token or --lang.")
+
+@cli.command()
+@click.option("--days", default=7, help="Days to look back")
+@click.option("--year", default=0, help="Specific year")
+@click.option("--month", default=0, help="Specific month")
+@click.option("--day", default=0, help="Specific day")
+@click.option("--lang", default="", help="Language filter")
+@click.option("--limit", default=10, help="Result limit")
+@click.option("--translate", is_flag=True, help="Translate descriptions")
+@click.option("--export", default="", help="Export format (csv/json)")
+@click.option("--strict", is_flag=True, help="Strict language filtering (primary only)")
+def fetch(days, year, month, day, lang, limit, translate, export, strict):
+    """Fetch trending repos."""
+    if not lang:
+        lang = load_config().get("default_lang", "")
 
     date_query = ""
     display_label = ""
 
-    # If year is provided, we build a specific date string (YYYY or YYYY-MM or YYYY-MM-DD)
-    if year:
+    if year > 0:
         date_query = f"{year}"
         display_label = f"year {year}"
-        
-        if month:
+        if month > 0:
             date_query += f"-{month:02d}"
-            # Get month name for better display
-            month_name = datetime(year, month, 1).strftime("%B")
-            display_label = f"{month_name} {year}"
-            
-            if day:
+            if day > 0:
                 date_query += f"-{day:02d}"
-                display_label = f"{month_name} {day}, {year}"
-    
-    # If no year, but days is provided (or default to 7)
     else:
-        lookback = days if days is not None else 7
-        target_date = datetime.now() - timedelta(days=lookback)
+        target_date = datetime.now() - timedelta(days=days)
         date_query = f">{target_date.strftime('%Y-%m-%d')}"
-        display_label = f"the last {lookback} days"
+        display_label = f"the last {days} days"
 
-    lang_label = lang.capitalize() if lang else "All Languages"
+    data = get_trending_repos(date_query, lang, strict=strict)
 
-    # Call the API with our constructed date query
-    data = get_trending_repos(date_query, lang)
+    if "error" in data:
+        click.echo(f"Error: {data['error']}")
+        return
 
-    all_repos = data.get("items", [])
-    top_repos = all_repos[:limit]
+    top_repos = data.get("items", [])[:limit]
 
     if top_repos:
-        show_results(top_repos, limit, translate, lang_label=lang_label, time_label=display_label)
+        show_results(top_repos, limit, translate, lang_label=lang or "All", time_label=display_label)
+        if export:
+            path = export_data(top_repos, format=export.lower())
+            click.echo(f"Exported to {path}")
     else:
-        print(f"No trending repositories found for {display_label}.")
-
-@app.callback(invoke_without_command=True)
-def main(ctx: typer.Context):
-    if ctx.invoked_subcommand is None:
-        fetch()
+        click.echo("No results found.")
 
 if __name__ == "__main__":
-    app()
+    cli()
+

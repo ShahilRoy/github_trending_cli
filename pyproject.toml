@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "github-trending-cli"
+version = "0.1.0"
+description = "A professional CLI dashboard for tracking trending GitHub repositories"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "GPL-3.0-only"}
+authors = [
+    {name = "Shahil Roy"}
+]
+dependencies = [
+    "click>=8.0",
+    "httpx>=0.24.0",
+    "rich>=13.0",
+    "python-dotenv>=1.0",
+    "deep-translator>=1.11.4"
+]
+
+[project.scripts]
+gh-trending = "main:cli"
