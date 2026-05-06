@@ -48,7 +48,7 @@ GitHub limits how many times you can ask for data if you don't have a "Token". I
 ### How to use your token:
 Type this in your terminal (replace `YOUR_TOKEN` with the code you just copied):
 ```bash
-gh-trending config --token YOUR_TOKEN
+gh-t config --token YOUR_TOKEN
 ```
 
 ---
@@ -60,25 +60,25 @@ Once installed, you can use these commands from anywhere:
 ### Basic Commands
 | What you want to do | Type this command |
 | :--- | :--- |
-| **See Top 10 Trending Repos** | `gh-trending fetch` |
-| **See Top 5 instead of 10** | `gh-trending fetch --limit 5` |
-| **See only Python projects** | `gh-trending fetch --lang python` |
-| **Strictly only Python** (no mixed projects) | `gh-trending fetch --lang python --strict` |
+| **See Top 10 Trending Repos** | `gh-t fetch` |
+| **See Top 5 instead of 10** | `gh-t fetch --limit 5` |
+| **See only Python projects** | `gh-t fetch --lang python` |
+| **Strictly only Python** (no mixed projects) | `gh-t fetch --lang python --strict` |
 
 ### Advanced Tricks
 | What you want to do | Type this command |
 | :--- | :--- |
-| **See trends from 2023** | `gh-trending fetch --year 2023` |
-| **See trends from last 30 days** | `gh-trending fetch --days 30` |
-| **Translate results to English** | `gh-trending fetch --translate` |
-| **Save to Downloads folder (Excel/CSV)** | `gh-trending fetch --export csv` |
-| **Save to Downloads folder (JSON)** | `gh-trending fetch --export json` |
+| **See trends from 2023** | `gh-t fetch --year 2023` |
+| **See trends from last 30 days** | `gh-t fetch --days 30` |
+| **Translate results to English** | `gh-t fetch --translate` |
+| **Save to Downloads folder (Excel/CSV)** | `gh-t fetch --export csv` |
+| **Save to Downloads folder (JSON)** | `gh-t fetch --export json` |
 
 ### Configuration (Settings)
 | What you want to do | Type this command |
 | :--- | :--- |
-| **Set a default language** (e.g. Java) | `gh-trending config --lang java` |
-| **Check your current settings** | `gh-trending config --show` |
+| **Set a default language** (e.g. Java) | `gh-t config --lang java` |
+| **Check your current settings** | `gh-t config --show` |
 
 ---
 

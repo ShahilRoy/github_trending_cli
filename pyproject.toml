@@ -21,4 +21,4 @@ dependencies = [
 ]
 
 [project.scripts]
-gh-trending = "main:cli"
+gh-t = "main:cli"
