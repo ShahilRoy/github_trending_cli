@@ -148,15 +148,7 @@ gh-t config --token YOUR_GITHUB_TOKEN
 ---
 
 ## 📄 License
-
-This software is licensed under the **GNU General Public License v3.0**. 
-> This ensures that the code remains open-source and free for everyone to use and modify.
+This project is free to use and modify, but it must **always remain free** for everyone. It is protected by the **GNU General Public License v3.0**.
 
 ---
-
-<div align="center">
-  <p>Created with ❤️ by <b>Shahil Roy</b></p>
-  <a href="https://github.com/ShahilRoy">
-    <img src="https://img.shields.io/badge/GitHub-ShahilRoy-black?style=for-the-badge&logo=github" alt="GitHub" />
-  </a>
-</div>
+*Created with ❤️ by Shahil Roy*
