@@ -1,89 +1,162 @@
-# 🚀 GitHub Trending Dashboard
+<div align="center">
 
-This tool lets you see what projects are popular on GitHub right now, directly from your computer terminal. It's designed to look great and be very easy to use.
+  <img src="banner.png" alt="GitHub Trending CLI Banner" width="100%" />
+
+  # 🚀 GitHub Trending Dashboard
+  
+  [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+  [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+  [![GitHub stars](https://img.shields.io/github/stars/ShahilRoy/github_trending_cli?style=social)](https://github.com/ShahilRoy/github_trending_cli)
+
+  **A professional, terminal-based dashboard to track GitHub trends in real-time.**
+  *Sleek design, powerful filtering, and seamless exports.*
+
+  [Features](#-key-features) • [Installation](#-installation) • [Authentication](#-authentication) • [Usage](#-usage-commands) • [License](#-license)
+
+</div>
 
 ---
 
-## ✨ What can this tool do?
+## ✨ Key Features
 
-- 📊 **See Trends**: Shows a beautiful table of the top trending projects.
-- 🕒 **Choose Time**: Look at trends from today, this week, or even a specific year like 2023.
-- 🌍 **Translate**: If a project description is in a different language, it can translate it to English for you.
-- 📂 **Save Results**: You can save the list to your **Downloads** folder as a file (JSON or CSV).
-- 🎨 **Looks Cool**: It uses high-contrast colors and a professional "dashboard" style.
+<div align="left">
+
+- 📊 **Dynamic Trends**: Real-time access to popular GitHub projects.
+- 🕒 **Temporal Filtering**: Browse trends by day, week, or specific years (e.g., 2024).
+- 🌍 **Auto-Translation**: Instant translation of non-English descriptions.
+- 📂 **Flexible Exports**: Save data as `CSV` or `JSON` directly to your Downloads.
+- 🎨 **Premium UI**: High-contrast, dashboard-style terminal interface.
+- ⚙️ **Smart Config**: Persistent settings for your preferred languages and tokens.
+
+</div>
 
 ---
 
-## 🛠️ How to Install (For Beginners)
+## 🛠️ Installation
 
-If you are new to this, just follow these steps:
+Choose your operating system to see specific instructions:
 
-1. **Download the code**: 
-   Click the green "Code" button at the top of this GitHub page and select "Download ZIP". Extract the folder once it's downloaded.
-2. **Open your Terminal**:
-   On Windows, search for "CMD" or "PowerShell". On Mac, search for "Terminal".
-3. **Go to the folder**:
-   Type `cd` followed by a space, then drag the folder into the terminal window and press Enter.
-4. **Install the tool**:
-   Type this and press Enter:
-   ```bash
+<details>
+<summary><b>🪟 Windows</b></summary>
+<p>
+
+1. **Download & Extract**: 
+   Download the repository as a ZIP and extract it.
+2. **Open Terminal**: 
+   Open **PowerShell** or **Command Prompt**.
+3. **Navigate**: 
+   ```powershell
+   cd path/to/extracted/folder
+   ```
+4. **Install**:
+   ```powershell
    pip install .
    ```
+</p>
+</details>
+
+<details>
+<summary><b>🍎 macOS</b></summary>
+<p>
+
+1. **Download & Extract**: 
+   Download the ZIP and extract it to your preferred location.
+2. **Open Terminal**: 
+   Press `Cmd + Space` and type **Terminal**.
+3. **Navigate**: 
+   ```bash
+   cd ~/Downloads/github_trending_cli-main
+   ```
+4. **Install**:
+   ```bash
+   pip3 install .
+   ```
+   *(Note: You may need to use `python3 -m pip install .` if `pip3` is not in your path)*
+</p>
+</details>
+
+<details>
+<summary><b>🐧 Linux</b></summary>
+<p>
+
+1. **Clone/Download**: 
+   ```bash
+   git clone https://github.com/ShahilRoy/github_trending_cli.git
+   cd github_trending_cli
+   ```
+2. **Dependencies**: 
+   Ensure you have Python 3 and Pip installed:
+   ```bash
+   sudo apt update && sudo apt install python3-pip
+   ```
+3. **Install**:
+   ```bash
+   pip3 install .
+   ```
+</p>
+</details>
 
 ---
 
-## 🔐 How to get your GitHub Token (Crucial)
+## 🔐 Authentication
 
-GitHub limits how many times you can ask for data if you don't have a "Token". If you see a "Rate Limit" error, you need a token. Here is exactly how to get one:
+GitHub applies rate limits to unauthenticated requests. To ensure uninterrupted service, configure a Personal Access Token (PAT).
 
-1. Log in to your [GitHub account](https://github.com/).
-2. Click your **Profile Picture** (top right) -> **Settings**.
-3. Scroll all the way down on the left and click **Developer settings**.
-4. Click **Personal access tokens** -> **Tokens (classic)**.
-5. Click **Generate new token** -> **Generate new token (classic)**.
-6. Give it a name (like "My CLI Tool").
-7. **Important**: You don't need to check any boxes (permissions) for this tool to work! Just scroll to the bottom and click **Generate token**.
-8. **Copy the token** (it looks like `ghp_...`). **Warning: You will only see it once!**
+### 1. Generate Token
+1. Go to [GitHub Settings](https://github.com/settings/tokens).
+2. Select **Tokens (classic)** -> **Generate new token (classic)**.
+3. Name it "CLI Trends" (no specific scopes needed for trend fetching).
+4. **Copy the token** immediately.
 
-### How to use your token:
-Type this in your terminal (replace `YOUR_TOKEN` with the code you just copied):
+### 2. Configure CLI
+Run the following command in your terminal:
 ```bash
-gh-t config --token YOUR_TOKEN
+gh-t config --token YOUR_GITHUB_TOKEN
 ```
 
 ---
 
-## ⌨️ How to use the Tool (Easy Commands)
+## ⌨️ Usage Commands
 
-Once installed, you can use these commands from anywhere:
-
-### Basic Commands
-| What you want to do | Type this command |
+### 🔍 Fetching Trends
+| Goal | Command |
 | :--- | :--- |
-| **See Top 10 Trending Repos** | `gh-t fetch` |
-| **See Top 5 instead of 10** | `gh-t fetch --limit 5` |
-| **See only Python projects** | `gh-t fetch --lang python` |
-| **Strictly only Python** (no mixed projects) | `gh-t fetch --lang python --strict` |
+| **Top 10 Trending** | `gh-t fetch` |
+| **Custom Limit** | `gh-t fetch --limit 5` |
+| **Filter by Language** | `gh-t fetch --lang python` |
+| **Strict Language Check** | `gh-t fetch --lang rust --strict` |
+| **Translate Descriptions** | `gh-t fetch --translate` |
 
-### Advanced Tricks
-| What you want to do | Type this command |
+### 📅 Time-Based Trends
+| Goal | Command |
 | :--- | :--- |
-| **See trends from 2023** | `gh-t fetch --year 2023` |
-| **See trends from last 30 days** | `gh-t fetch --days 30` |
-| **Translate results to English** | `gh-t fetch --translate` |
-| **Save to Downloads folder (Excel/CSV)** | `gh-t fetch --export csv` |
-| **Save to Downloads folder (JSON)** | `gh-t fetch --export json` |
+| **Specific Year** | `gh-t fetch --year 2023` |
+| **Last N Days** | `gh-t fetch --days 30` |
 
-### Configuration (Settings)
-| What you want to do | Type this command |
+### 💾 Data Export
+| Goal | Command |
 | :--- | :--- |
-| **Set a default language** (e.g. Java) | `gh-t config --lang java` |
-| **Check your current settings** | `gh-t config --show` |
+| **Export to CSV** | `gh-t fetch --export csv` |
+| **Export to JSON** | `gh-t fetch --export json` |
+
+### ⚙️ Persistent Configuration
+| Goal | Command |
+| :--- | :--- |
+| **Set Default Language** | `gh-t config --lang javascript` |
+| **View Current Config** | `gh-t config --show` |
 
 ---
 
 ## 📄 License
-This project is free to use and modify, but it must **always remain free** for everyone. It is protected by the **GNU General Public License v3.0**.
+
+This software is licensed under the **GNU General Public License v3.0**. 
+> This ensures that the code remains open-source and free for everyone to use and modify.
 
 ---
-*Created with ❤️ by Shahil Roy*
+
+<div align="center">
+  <p>Created with ❤️ by <b>Shahil Roy</b></p>
+  <a href="https://github.com/ShahilRoy">
+    <img src="https://img.shields.io/badge/GitHub-ShahilRoy-black?style=for-the-badge&logo=github" alt="GitHub" />
+  </a>
+</div>
